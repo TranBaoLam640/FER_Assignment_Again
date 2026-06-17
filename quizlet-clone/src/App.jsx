@@ -5,7 +5,6 @@ import Home from "./pages/Home";
 import SetDetail from "./pages/SetDetail";
 import StudySession from "./pages/StudySession";
 import CreateSet from "./pages/CreateSet";
-import CreateSetOcr from "./pages/CreateSetOcr" ;
 
 function App() {
   return (
@@ -25,7 +24,6 @@ function App() {
         <Route path="/set/:setId" element={<SetDetail />} />
         <Route path="/set/:setId/study" element={<StudySession />} />
         <Route path="/create" element={<CreateSet />} />
-        <Route path="/createSetOcr" element={<CreateSetOcr />} />
         {/* Route dự phòng nếu gõ sai URL */}
         <Route
           path="*"

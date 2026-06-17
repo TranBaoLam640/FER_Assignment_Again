@@ -36,7 +36,7 @@ function SetDetail() {
           size="lg"
           className="me-3"
         >
-          🎯 Vào chế độ Học Flashcard
+           Vào chế độ Học Flashcard
         </Button>
       </div>
 

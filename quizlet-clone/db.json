@@ -62,6 +62,616 @@
           "imageUrl": ""
         }
       ]
+    },
+    {
+      "id": "d9d0",
+      "title": "OCR Test",
+      "description": "OCR Test\n",
+      "cards": [
+        {
+          "newWord": "",
+          "definition": "",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "lift off",
+          "definition": "The moment a rocket leaves the ground",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "disgusting",
+          "definition": "Extremely unpleasant, gross and acceptable",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "lift off",
+          "definition": "The moment a rocket leaves the ground",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "disgusting",
+          "definition": "Extremely unpleasant, gross and acceptable",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "awesome",
+          "definition": "Extremely good, impressive or inspiring",
+          "imageUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "2e70",
+      "title": "HIHIHI",
+      "description": "",
+      "cards": [
+        {
+          "newWord": "",
+          "definition": "",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Commit",
+          "definition": "Gửi mã nguồn lên kho lưu trữ trực tuyến để lưu lại lịch sử thay đổi",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "State",
+          "definition": "Đối tượng đặc biệt trong React dùng để lưu trữ dữ liệu của thành phần và tự động kích hoạt render lại giao diện khi thay đổi",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Framework",
+          "definition": "Khung làm việc chứa các thư viện cấu trúc sẵn giúp lập trình viên phát triển ứng dụng nhanh hơn mà không cần viết lại từ đầu",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "lift off",
+          "definition": "The moment a rocket leaves the ground",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "disgusting",
+          "definition": "Extremely unpleasant, gross and acceptable",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "awesome",
+          "definition": "Extremely good, impressive or inspiring",
+          "imageUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "8760",
+      "title": "aa",
+      "description": "",
+      "cards": [
+        {
+          "newWord": "d",
+          "definition": "d",
+          "imageUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "a874",
+      "title": "A",
+      "description": "",
+      "cards": [
+        {
+          "newWord": "A",
+          "definition": "BV",
+          "imageUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "d24b",
+      "title": "Sample IT ",
+      "description": "Sample IT ",
+      "cards": [
+        {
+          "newWord": "Algorithm",
+          "definition": "A set of step-by-step instructions for solving a specific problem",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Array",
+          "definition": "A collection of elements stored at contiguous memory locations",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Backend",
+          "definition": "The server-side of an application that handles data logic and database operations",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Frontend",
+          "definition": "The client-side of an application that users interact with directly",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Database",
+          "definition": "An organized collection of structured data stored electronically",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Compiler",
+          "definition": "A program that translates source code into machine language",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Interpreter",
+          "definition": "A program that executes instructions written in a programming language directly",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Variable",
+          "definition": "A storage location paired with an associated symbolic name",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Function",
+          "definition": "A block of organized and reusable code used to perform a single action",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Class",
+          "definition": "A blueprint or template for creating objects in object-oriented programming",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Object",
+          "definition": "An instance of a class containing real values instead of variables",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Inheritance",
+          "definition": "A mechanism where a new class adopts attributes and methods of an existing class",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Polymorphism",
+          "definition": "The ability of a variable, function, or object to take on multiple forms",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Encapsulation",
+          "definition": "The bundling of data and the methods that operate on that data into a single unit",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Abstraction",
+          "definition": "Hiding complex implementation details and showing only the essential features",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "API",
+          "definition": "Application Programming Interface, a set of rules allowing apps to talk to each other",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Framework",
+          "definition": "A platform or structure providing generic functionality to develop applications",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Library",
+          "definition": "A collection of non-volatile resources used by computer programs",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Repository",
+          "definition": "A central location where data or source code is stored and managed",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Commit",
+          "definition": "A command used to save changes made to the source code to a repository",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Branch",
+          "definition": "A parallel version of a repository contained within the same directory",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Merge",
+          "definition": "The act of combining two or more branches of code into one",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Conflict",
+          "definition": "An issue that occurs when changes from different branches clash with each other",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Syntax",
+          "definition": "The set of rules that defines the combinations of symbols in a language",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Semantic",
+          "definition": "The meaning of a piece of code or expression in a programming language",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Debugging",
+          "definition": "The process of finding and resolving bugs or defects in a computer program",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Exception",
+          "definition": "An anomalous or exceptional condition requiring special processing",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Thread",
+          "definition": "The smallest unit of execution within an operating system process",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Process",
+          "definition": "An instance of a program being executed by a computer",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Asynchronous",
+          "definition": "Operations that occur independently of the main program flow",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Synchronous",
+          "definition": "Operations that occur sequentially and block subsequent tasks",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Callback",
+          "definition": "A function passed as an argument to another function to be executed later",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Promise",
+          "definition": "An object representing the eventual completion or failure of an async operation",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Closure",
+          "definition": "A function that retains access to its lexical scope even when executed outside",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Middleware",
+          "definition": "Software that acts as a bridge between an operating system or database and apps",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Deployment",
+          "definition": "The process of making an application available for use on a server",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Hosting",
+          "definition": "The service of providing storage space and access for websites or applications",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Server",
+          "definition": "A computer or system that provides data or services to other computers",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Client",
+          "definition": "A piece of computer hardware or software that accesses a service made available by a server",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Protocol",
+          "definition": "A system of rules that allow two or more entities to transmit information",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "HTTP",
+          "definition": "Hypertext Transfer Protocol, the foundation of data communication for the World Wide Web",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "HTTPS",
+          "definition": "A secure version of HTTP that uses encryption for secure communication",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "IP Address",
+          "definition": "A unique string of characters that identifies each computer using the Internet",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "DNS",
+          "definition": "Domain Name System, the phonebook of the Internet that translates domain names to IP addresses",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Cookie",
+          "definition": "A small piece of data stored on the user's computer by the web browser",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Session",
+          "definition": "A temporary and interactive information interchange between two communicating devices",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Token",
+          "definition": "An object that encapsulates a security identity and grants access privileges",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Authentication",
+          "definition": "The process of verifying the identity of a user or process",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Authorization",
+          "definition": "The process of giving someone permission to do or have something",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Encryption",
+          "definition": "The process of converting information or data into a code to prevent unauthorized access",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Decryption",
+          "definition": "The process of taking encoded or encrypted text and converting it back into readable text",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Hash",
+          "definition": "A function that converts an input of letters and numbers into a fixed-length encrypted output",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Salting",
+          "definition": "Adding random data to the input of a hash function to safeguard passwords",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "SQL",
+          "definition": "Structured Query Language, used to manage and manipulate relational databases",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "NoSQL",
+          "definition": "A non-relational database management system that does not require a fixed schema",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Schema",
+          "definition": "The skeleton structure that represents the logical view of the entire database",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Query",
+          "definition": "A request for data or information from a database table or combination of tables",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Index",
+          "definition": "A database structure that speeds up data retrieval operations on a table",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Key",
+          "definition": "An attribute or set of attributes that uniquely identifies a record in a database",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "JSON",
+          "definition": "JavaScript Object Notation, a lightweight format for storing and transporting data",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "XML",
+          "definition": "Extensible Markup Language, a markup language that defines a set of rules for encoding docs",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "YAML",
+          "definition": "A human-readable data-serialization language commonly used for configuration files",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "UI",
+          "definition": "User Interface, the series of screens, pages, and visual elements that users interact with",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "UX",
+          "definition": "User Experience, the internal experience that a person has as they interact with a product",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Responsive",
+          "definition": "A web design approach that makes web pages render well on a variety of devices",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "DOM",
+          "definition": "Document Object Model, a programming interface for web documents",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "SPA",
+          "definition": "Single Page Application, a web app that interacts with the user by dynamically rewriting the page",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "SSR",
+          "definition": "Server-Side Rendering, the ability of an application to contribute the HTML files on the server",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "CSR",
+          "definition": "Client-Side Rendering, rendering pages in the browser using JavaScript",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Hydration",
+          "definition": "A technique in which client-side JavaScript sets up a static HTML page into a dynamic one",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Virtual DOM",
+          "definition": "A lightweight JavaScript representation of the Document Object Model",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "State",
+          "definition": "An object that holds some information that may change over the lifetime of the component",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Props",
+          "definition": "Inputs to a reusable component that should not be changed inside that component",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Hook",
+          "definition": "A special function that lets you use state and other React features without writing a class",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Redux",
+          "definition": "A predictable state container designed to help write JavaScript apps that behave consistently",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Component",
+          "definition": "A modular, reusable building block for a user interface",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Routing",
+          "definition": "The process of selecting a path for traffic in a network or between web pages",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "SDK",
+          "definition": "Software Development Kit, a collection of software development tools in one installable package",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "IDE",
+          "definition": "Integrated Development Environment, a software application that provides comprehensive facilities",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Git",
+          "definition": "A distributed version control system to track changes in source code",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "GitHub",
+          "definition": "A cloud-based service that helps developers store and manage their code using Git",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "CI/CD",
+          "definition": "Continuous Integration and Continuous Deployment, a method to frequently deliver apps to customers",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Docker",
+          "definition": "A platform that uses OS-level virtualization to deliver software in packages called containers",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Container",
+          "definition": "A standard unit of software that packages up code and all its dependencies",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Kubernetes",
+          "definition": "An open-source container-orchestration system for automating app deployment and scaling",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Agile",
+          "definition": "A project management methodology characterized by the division of tasks into short periods",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Scrum",
+          "definition": "A framework within which people can address complex adaptive problems",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Sprint",
+          "definition": "A set period of time during which specific work has to be completed",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "DevOps",
+          "definition": "A set of practices that combines software development and IT operations",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Microservices",
+          "definition": "An architectural style that structures an application as a collection of services",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Monolith",
+          "definition": "A traditional unified software application that is self-contained and independent",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Load Balancer",
+          "definition": "A device that distributes network or application traffic across a cluster of servers",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Cache",
+          "definition": "A hardware or software component that stores data so that future requests can be served faster",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "CDN",
+          "definition": "Content Delivery Network, a geographically distributed network of proxy servers and data centers",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Firewall",
+          "definition": "A network security device that monitors incoming and outgoing network traffic",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Log",
+          "definition": "A file that records either events that occur in an operating system or software runs",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "Backup",
+          "definition": "A copy of computer data taken and stored elsewhere so that it may be used to restore the original",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "MVC",
+          "definition": "Model-View-Controller, a software architectural pattern for implementing user interfaces",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "REST",
+          "definition": "Representational State Transfer, an architectural style for providing standards between computer systems",
+          "imageUrl": ""
+        },
+        {
+          "newWord": "GraphQL",
+          "definition": "A data query and manipulation language for APIs, and a runtime for fulfilling queries",
+          "imageUrl": ""
+        }
+      ]
     }
   ]
 }

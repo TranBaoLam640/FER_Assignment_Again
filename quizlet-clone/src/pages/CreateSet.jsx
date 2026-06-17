@@ -1,38 +1,129 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Card, Row, Col, Alert } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Form,
+  Button,
+  Card,
+  Row,
+  Col,
+  Alert,
+} from "react-bootstrap";
 
-const API_URL = 'http://localhost:3001/sets';
+const API_URL = "http://localhost:3001/sets";
 
 function CreateSet() {
   // ===== STATE =====
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [cards, setCards] = useState([
-    { newWord: '', definition: '', imageUrl: '' }
+    { newWord: "", definition: "", imageUrl: "" },
   ]);
-
-  // Danh sách tất cả bộ thẻ đã tạo (để hiển thị + sửa/xóa)
+  const [progress, setProgress] = useState("");
+  const [results, setResults] = useState([]);
+  const [showSaveButton, setShowSaveButton] = useState(false);
+  const [text, setText] = useState("");
+  const [payloadArray, setPayloadArray] = useState([]);
   const [sets, setSets] = useState([]);
-
-  // ID của bộ thẻ đang được chỉnh sửa (null = đang tạ          o mới)
   const [editingId, setEditingId] = useState(null);
-
-  // Thông báo kết quả
-  const [alert, setAlert] = useState(null); // { variant, message }
+  const [alert, setAlert] = useState(null);
+  const [error, setError] = useState("");
+  // State điều khiển ẩn/hiện ô nhập văn bản thô
+  const [showTextAreaInput, setShowTextAreaInput] = useState(false);
+  const [rawText, setRawText] = useState("");
 
   // ===== FETCH DATA KHI LOAD TRANG =====
   useEffect(() => {
     fetchSets();
   }, []);
 
+  const fileToDataURL = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFileChangeAndProcess = async (e) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    // Đảm bảo thư viện Puter đã được nạp từ thẻ script trong index.html
+    if (!window.puter) {
+      alert("Puter.js library is not loaded yet");
+      return;
+    }
+
+    setProgress("");
+    setResults([]);
+    setShowSaveButton(false);
+
+    const tempResults = [];
+    const localPayloadArray = []; // Dùng mảng tạm cục bộ để gom hết từ của mọi ảnh trước
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      setProgress(`Processing image ${i + 1} of ${files.length}...`);
+
+      try {
+        const dataUrl = await fileToDataURL(file);
+        const text = await window.puter.ai.img2txt(dataUrl);
+        setText(text);
+        const successResult = {
+          filename: file.name,
+          text: text || "No text found",
+          timestamp: new Date().toISOString(),
+          isError: false,
+        };
+
+        const textArray = text.split(";");
+        const textArrayTrim = textArray
+          .flatMap((item) => item.split("\n"))
+          .map((item) => item.trim())
+          .filter((item) => item.includes(":"));
+
+        textArrayTrim.map((item) => {
+          const newObject = {
+            newWord: item.split(":")[0].trim(),
+            definition: item.split(":")[1].trim(),
+            imageUrl: "",
+          };
+          localPayloadArray.push(newObject); // Đẩy vào mảng cục bộ
+        });
+
+        tempResults.push(successResult);
+        setResults((prev) => [...prev, successResult]);
+      } catch (error) {
+        const errorResult = {
+          filename: file.name,
+          text: `Error - ${error.message}`,
+          isError: true,
+        };
+        tempResults.push(errorResult);
+        setResults((prev) => [...prev, errorResult]);
+      }
+    }
+    setCards([...cards, ...localPayloadArray]);
+    setPayloadArray((prev) => [...prev, ...localPayloadArray]);
+
+    setProgress("All images processed!");
+    const hasSuccess = tempResults.some((r) => !r.isError);
+    if (hasSuccess) {
+      setShowSaveButton(true);
+    }
+
+    e.target.value = "";
+  };
+
   const fetchSets = async () => {
     try {
       const res = await fetch(API_URL);
       const data = await res.json();
       setSets(data);
-      console.log(data);
     } catch (err) {
-      showAlert('danger', 'Không thể kết nối đến json-server. Hãy chắc chắn đã chạy lệnh: npx json-server --watch db.json --port 3001');
+      showAlert("danger", "Không thể kết nối đến json-server...");
     }
   };
 
@@ -49,108 +140,139 @@ function CreateSet() {
   };
 
   const handleAddCard = () => {
-    setCards([...cards, { newWord: '', definition: '', imageUrl: '' }]);
+    setCards([...cards, { newWord: "", definition: "", imageUrl: "" }]);
   };
 
   const handleDeleteCard = (indexToRemove) => {
     if (cards.length === 1) {
-      showAlert('warning', 'Bộ thẻ phải có ít nhất 1 thẻ từ vựng!');
+      showAlert("warning", "Bộ thẻ phải có ít nhất 1 thẻ từ vựng!");
       return;
     }
     setCards(cards.filter((_, i) => i !== indexToRemove));
   };
 
-  // ===== RESET FORM =====
-  const resetForm = () => {
-    setTitle('');
-    setDescription('');
-    setCards([{ newWord: '', definition: '', imageUrl: '' }]);
-    setEditingId(null);
+  // ===== LOGIC TỰ XỬ LÝ (BẠN SẼ VIẾT VÀO ĐÂY) =====
+  const handleImportRawText = () => {
+    const localPayloadArray = [];
+    const textArray = rawText.split(";");
+    const textArrayTrim = rawText
+      .split(";")
+      .flatMap((item) => item.split("\n"))
+      .map((item) => item.trim())
+      .filter((item) => item.includes(":"));
+    console.log(textArrayTrim);
+
+    textArrayTrim.forEach((item) => {
+      const parts = item.split(":");
+      const newObject = {
+        newWord: parts[0] ? parts[0].trim() : "",
+        definition: parts[1] ? parts[1].trim() : "",
+        imageUrl: "",
+      };
+      localPayloadArray.push(newObject);
+    });
+    setCards([...cards, ...localPayloadArray]);
   };
 
-  // ===== TẠO MỚI hoặc CẬP NHẬT (PUT) =====
-  const 
-  handleSubmit = async (e) => {
-    e.preventDefault();
+  // ===== RESET FORM =====
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setCards([{ newWord: "", definition: "", imageUrl: "" }]);
+    setEditingId(null);
+    setRawText("");
+    setShowTextAreaInput(false);
+  };
 
+  // ===== TẠO MỚI hoặc CẬP NHẬT =====
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (!title.trim()) {
-      showAlert('warning', 'Vui lòng nhập Tiêu đề cho bộ thẻ!');
+      setError("Vui lòng nhập tiêu đề của set");
       return;
     }
 
-    const payload = { title, description, cards };
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      if (!card.newWord.trim() || !card.definition.trim()) {
+        setError(
+          `Thẻ #${i + 1} còn trống dữ liệu. Vui lòng điền cả Thuật ngữ và Định nghĩa!`,
+        );
+        return; 
+      }
+    }
 
+    setError("");
+
+    const payload = { title, description, cards };
     try {
       let res;
-
       if (editingId !== null) {
-        // === CẬP NHẬT (PUT) ===
         res = await fetch(`${API_URL}/${editingId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
       } else {
-        // === TẠO MỚI (POST) ===
         res = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
       }
-
       if (res.ok) {
-        showAlert('success', editingId ? 'Cập nhật bộ thẻ thành công!' : 'Tạo bộ thẻ mới thành công!');
+        showAlert(
+          "success",
+          editingId
+            ? "Cập nhật bộ thẻ thành công!"
+            : "Tạo bộ thẻ mới thành công!",
+        );
         resetForm();
-        fetchSets(); // Refresh danh sách
-      } else {
-        throw new Error('Server trả về lỗi');
+        fetchSets();
       }
     } catch (err) {
-      showAlert('danger', 'Có lỗi xảy ra, không thể lưu bộ thẻ.');
+      showAlert("danger", "Có lỗi xảy ra, không thể lưu bộ thẻ.");
     }
   };
 
-  // ===== NẠP DỮ LIỆU VÀO FORM ĐỂ SỬA =====
   const handleEdit = (set) => {
     setEditingId(set.id);
     setTitle(set.title);
     setDescription(set.description);
     setCards(set.cards);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // ===== XÓA BỘ THẺ (DELETE) =====
   const handleDelete = async (id) => {
-    if (!window.confirm('Bạn có chắc muốn xóa bộ thẻ này không?')) return;
-
+    if (!window.confirm("Bạn có chắc muốn xóa bộ thẻ này không?")) return;
     try {
-      const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
       if (res.ok) {
-        showAlert('success', 'Đã xóa bộ thẻ!');
+        showAlert("success", "Đã xóa bộ thẻ!");
         fetchSets();
-        if (editingId === id) resetForm(); // Nếu đang sửa cái này thì reset form
-      } else {
-        throw new Error();
+        if (editingId === id) resetForm();
       }
     } catch {
-      showAlert('danger', 'Không thể xóa bộ thẻ.');
+      showAlert("danger", "Không thể xóa bộ thẻ.");
     }
   };
 
-  // ===== RENDER =====
   return (
-    <Container className="my-5" style={{ maxWidth: '800px' }}>
+    <Container className="my-5" style={{ maxWidth: "800px" }}>
       {/* THÔNG BÁO */}
       {alert && (
-        <Alert variant={alert.variant} dismissible onClose={() => setAlert(null)}>
+        <Alert
+          variant={alert.variant}
+          dismissible
+          onClose={() => setAlert(null)}
+        >
           {alert.message}
         </Alert>
       )}
 
       {/* TIÊU ĐỀ */}
       <h2 className="mb-4 text-dark fw-bold">
-        {editingId ? '✏️ Chỉnh sửa bộ thẻ' : 'Tạo học phần mới'}
+        {editingId ? "✏️ Chỉnh sửa bộ thẻ" : "Tạo học phần mới"}
       </h2>
 
       <Form onSubmit={handleSubmit}>
@@ -179,6 +301,77 @@ function CreateSet() {
           </Form.Group>
         </Card>
 
+        {/* ===== KHU VỰC 2 BUTTON TÍNH NĂNG NHẬP NHANH ===== */}
+        <div className="mb-4 bg-white p-3 border rounded-3 shadow-sm">
+          <div className="d-flex justify-content-between align-items-center">
+            <span className="small text-muted fw-bold">
+              💡 Nhập dữ liệu nhanh:
+            </span>
+            <div className="d-flex gap-2">
+              {/* Button 1: Nhập văn bản thô */}
+              <Button
+                variant="outline-dark"
+                size="sm"
+                onClick={() => setShowTextAreaInput(!showTextAreaInput)}
+              >
+                {showTextAreaInput ? "✕ Đóng" : " Nhập văn bản thô"}
+              </Button>
+
+              {/* Button 2: Quét ảnh từ vựng (OCR) */}
+              <Button
+                variant="outline-success"
+                size="sm"
+                style={{ position: "relative" }}
+              >
+                Quét ảnh từ vựng
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleFileChangeAndProcess}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    opacity: 0,
+                    cursor: "pointer",
+                  }}
+                />
+              </Button>
+            </div>
+          </div>
+
+          {/* Khung hiển thị TextArea nhập liệu thô */}
+          {showTextAreaInput && (
+            <div className="mt-3 p-3 bg-light rounded border">
+              <Form.Group className="mb-2">
+                <Form.Label className="small fw-semibold text-secondary">
+                  Nhập hoặc dán đoạn văn bản thô của bạn dưới đây:
+                </Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={4}
+                  value={rawText}
+                  onChange={(e) => setRawText(e.target.value)}
+                  placeholder="Ví dụ: từ mới : định nghĩa; word : definition;"
+                  style={{ fontSize: "14px" }}
+                />
+              </Form.Group>
+              <div className="d-flex justify-content-end">
+                <Button
+                  variant="success"
+                  size="sm"
+                  onClick={handleImportRawText}
+                >
+                  Xác nhận dữ liệu
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* DANH SÁCH CARDS */}
         <h3 className="mb-3 text-dark h4">Danh sách từ vựng</h3>
 
@@ -199,42 +392,54 @@ function CreateSet() {
               <Row>
                 <Col md={4} className="mb-3 mb-md-0">
                   <Form.Group controlId={`word-${index}`}>
-                    <Form.Label className="small text-muted fw-semibold">Thuật ngữ (New Word)</Form.Label>
+                    <Form.Label className="small text-muted fw-semibold">
+                      Thuật ngữ (New Word)
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       value={card.newWord}
-                      onChange={(e) => handleCardChange(index, 'newWord', e.target.value)}
+                      onChange={(e) =>
+                        handleCardChange(index, "newWord", e.target.value)
+                      }
                       placeholder="Từ mới..."
                       className="border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark px-1"
-                      style={{ boxShadow: 'none' }}
+                      style={{ boxShadow: "none" }}
                     />
                   </Form.Group>
                 </Col>
 
                 <Col md={4} className="mb-3 mb-md-0">
                   <Form.Group controlId={`def-${index}`}>
-                    <Form.Label className="small text-muted fw-semibold">Định nghĩa (Definition)</Form.Label>
+                    <Form.Label className="small text-muted fw-semibold">
+                      Định nghĩa (Definition)
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       value={card.definition}
-                      onChange={(e) => handleCardChange(index, 'definition', e.target.value)}
+                      onChange={(e) =>
+                        handleCardChange(index, "definition", e.target.value)
+                      }
                       placeholder="Nghĩa của từ..."
                       className="border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark px-1"
-                      style={{ boxShadow: 'none' }}
+                      style={{ boxShadow: "none" }}
                     />
                   </Form.Group>
                 </Col>
 
                 <Col md={4}>
                   <Form.Group controlId={`img-${index}`}>
-                    <Form.Label className="small text-muted fw-semibold">Link ảnh (Image URL)</Form.Label>
+                    <Form.Label className="small text-muted fw-semibold">
+                      Link ảnh (Image URL)
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       value={card.imageUrl}
-                      onChange={(e) => handleCardChange(index, 'imageUrl', e.target.value)}
+                      onChange={(e) =>
+                        handleCardChange(index, "imageUrl", e.target.value)
+                      }
                       placeholder="https://example.com/anh.jpg"
                       className="border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark px-1"
-                      style={{ boxShadow: 'none' }}
+                      style={{ boxShadow: "none" }}
                     />
                   </Form.Group>
                 </Col>
@@ -243,34 +448,47 @@ function CreateSet() {
           </Card>
         ))}
 
-        {/* NÚT THÊM THẺ */}
+        {/* NÚT THÊM THẺ THỦ CÔNG */}
         <Button
           variant="outline-primary"
           onClick={handleAddCard}
           className="w-100 py-3 fw-bold mb-4 bg-white"
-          style={{ borderStyle: 'dashed', borderWidth: '2px', fontSize: '16px' }}
+          style={{
+            borderStyle: "dashed",
+            borderWidth: "2px",
+            fontSize: "16px",
+          }}
         >
           + Add a card
         </Button>
 
-        {/* NÚT SUBMIT + HỦY SỬA */}
-        <div className="d-flex justify-content-end gap-2">
+        {/* NÚT SUBMIT */}
+
+        <div className="d-flex justify-content-center gap-2">
           {editingId && (
             <Button variant="outline-secondary" size="lg" onClick={resetForm}>
               Hủy chỉnh sửa
             </Button>
           )}
-          <Button type="submit" variant="primary" size="lg" className="px-5 fw-bold">
-            {editingId ? 'Lưu thay đổi' : 'Tạo bộ học phần'}
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            className="px-5 fw-bold"
+          >
+            {editingId ? "Lưu thay đổi" : "Tạo bộ học phần"}
           </Button>
         </div>
+        <div className="mt-4">{error}</div>
       </Form>
 
-      {/* ===== DANH SÁCH CÁC BỘ THẺ ĐÃ TẠO ===== */}
+      {/* ===== DANH SÁCH BỘ THẺ ĐÃ TẠO ===== */}
       {sets.length > 0 && (
         <>
           <hr className="my-5" />
-          <h3 className="mb-4 text-dark fw-bold">📚 Các bộ thẻ đã tạo ({sets.length})</h3>
+          <h3 className="mb-4 text-dark fw-bold">
+            📚 Các bộ thẻ đã tạo ({sets.length})
+          </h3>
           {sets.map((set) => (
             <Card key={set.id} className="mb-3 shadow-sm rounded-3">
               <Card.Body>
@@ -280,7 +498,9 @@ function CreateSet() {
                     {set.description && (
                       <p className="text-muted small mb-1">{set.description}</p>
                     )}
-                    <span className="badge bg-secondary">{set.cards?.length || 0} thẻ</span>
+                    <span className="badge bg-secondary">
+                      {set.cards?.length || 0} thẻ
+                    </span>
                   </div>
                   <div className="d-flex gap-2">
                     <Button

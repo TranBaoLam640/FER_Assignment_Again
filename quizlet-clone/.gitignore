@@ -3,7 +3,7 @@
 # 1. LOCAL HISTORY & EDITORS (Thư mục lịch sử & IDEs)
 # ====================================================================
 .history/
-../.history/
+**/ .history/
 .vscode/*
 !.vscode/extensions.json
 .idea
