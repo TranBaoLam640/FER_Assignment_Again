@@ -36,7 +36,16 @@ function SetDetail() {
           size="lg"
           className="me-3"
         >
-           Vào chế độ Học Flashcard
+           Flashcards Mode
+        </Button>
+        <Button
+          as={Link}
+          to={`/set/${setId}/learn`}
+          variant="success"
+          size="lg"
+          className="me-3"
+        >
+          Learning Mode
         </Button>
       </div>
 

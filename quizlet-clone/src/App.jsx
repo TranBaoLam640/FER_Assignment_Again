@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import SetDetail from "./pages/SetDetail";
 import StudySession from "./pages/StudySession";
 import CreateSet from "./pages/CreateSet";
+import LearningSession from "./pages/LearningSession";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/set/:setId" element={<SetDetail />} />
         <Route path="/set/:setId/study" element={<StudySession />} />
         <Route path="/create" element={<CreateSet />} />
+        <Route path="/set/:setId/learn" element={<LearningSession />} />
         {/* Route dự phòng nếu gõ sai URL */}
         <Route
           path="*"

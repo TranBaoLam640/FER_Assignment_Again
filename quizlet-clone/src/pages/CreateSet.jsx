@@ -153,24 +153,35 @@ function CreateSet() {
 
   // ===== LOGIC TỰ XỬ LÝ (BẠN SẼ VIẾT VÀO ĐÂY) =====
   const handleImportRawText = () => {
-    const localPayloadArray = [];
-    const textArray = rawText.split(";");
-    const textArrayTrim = rawText
-      .split(";")
-      .flatMap((item) => item.split("\n"))
-      .map((item) => item.trim())
-      .filter((item) => item.includes(":"));
-    console.log(textArrayTrim);
+    if (!rawText || !rawText.trim()) return;
 
-    textArrayTrim.forEach((item) => {
-      const parts = item.split(":");
-      const newObject = {
-        newWord: parts[0] ? parts[0].trim() : "",
-        definition: parts[1] ? parts[1].trim() : "",
-        imageUrl: "",
-      };
-      localPayloadArray.push(newObject);
+    const localPayloadArray = [];
+
+    // Bước 1: Tách thành từng nhóm thẻ dựa trên dấu phân tách dòng ";"
+    const rawCards = rawText.split(";");
+
+    rawCards.forEach((rawCard) => {
+      const trimmedCard = rawCard.trim();
+      if (!trimmedCard) return;
+
+      const lastColonIndex = trimmedCard.lastIndexOf(":");
+
+      if (lastColonIndex !== -1) {
+        const newWord = trimmedCard.substring(0, lastColonIndex).trim();
+        // Phần sau dấu ":" cuối cùng là đáp án
+        const definition = trimmedCard.substring(lastColonIndex + 1).trim();
+
+        if (newWord && definition) {
+          localPayloadArray.push({
+            newWord: newWord,
+            definition: definition,
+            imageUrl: "",
+          });
+        }
+      }
     });
+
+    console.log("Imported Cards:", localPayloadArray);
     setCards([...cards, ...localPayloadArray]);
   };
 
@@ -198,7 +209,7 @@ function CreateSet() {
         setError(
           `Thẻ #${i + 1} còn trống dữ liệu. Vui lòng điền cả Thuật ngữ và Định nghĩa!`,
         );
-        return; 
+        return;
       }
     }
 
@@ -255,6 +266,46 @@ function CreateSet() {
     } catch {
       showAlert("danger", "Không thể xóa bộ thẻ.");
     }
+  };
+  const handleImportSource = () => {
+    if (!rawText || !rawText.trim()) return;
+
+    const localPayloadArray = [];
+
+    // Bước 1: Tách thành từng nhóm thẻ dựa trên dấu phân tách dòng ";"
+    const rawCards = rawText.split(";");
+
+    rawCards.forEach((rawCard) => {
+      const trimmedCard = rawCard.trim();
+      if (!trimmedCard) return;
+
+      // Tìm dấu ":" cuối cùng để tách vế
+      const lastColonIndex = trimmedCard.lastIndexOf(":");
+
+      if (lastColonIndex !== -1) {
+        const rawNewWord = trimmedCard.substring(0, lastColonIndex).trim();
+        const definition = trimmedCard.substring(lastColonIndex + 1).trim();
+
+        if (rawNewWord && definition) {
+          // XỬ LÝ FORMAT CHO newWord (Word):
+          // Ép câu hỏi ở 1 dòng, A., B., C., D. tự động xuống dòng riêng biệt
+          const formattedNewWord = rawNewWord
+            .replace(/\s*\b(A\.|B\.|C\.|D\.)\s*/g, "\n$1 ")
+            .replace(/\n+/g, "\n")
+            .trim();
+
+          // Push vào mảng đúng y hệt template của bạn, không thêm thắt State thừa
+          localPayloadArray.push({
+            newWord: formattedNewWord,
+            definition: definition,
+            imageUrl: "",
+          });
+        }
+      }
+    });
+
+    console.log("Imported Cards:", localPayloadArray);
+    setCards([...cards, ...localPayloadArray]);
   };
 
   return (
@@ -363,9 +414,17 @@ function CreateSet() {
                 <Button
                   variant="success"
                   size="sm"
+                  onClick={handleImportSource}
+                  className="me-2"
+                >
+                  Import Source
+                </Button>
+                <Button
+                  variant="success"
+                  size="sm"
                   onClick={handleImportRawText}
                 >
-                  Xác nhận dữ liệu
+                  Import từ mới
                 </Button>
               </div>
             </div>
@@ -389,43 +448,75 @@ function CreateSet() {
             </Card.Header>
 
             <Card.Body className="pt-0">
-              <Row>
+              <Row className="align-items-start">
+                {/* CỘT 1: TỪ MỚI (Tự động co giãn theo số dòng) */}
                 <Col md={4} className="mb-3 mb-md-0">
                   <Form.Group controlId={`word-${index}`}>
                     <Form.Label className="small text-muted fw-semibold">
-                      Thuật ngữ (New Word)
+                      Từ mới (Term)
                     </Form.Label>
                     <Form.Control
-                      type="text"
+                      as="textarea"
+                      // THUẬT TOÁN CO GIÃN: Đếm số \n trong chữ, ít nhất là 1 dòng, nhiều nhất là 6 dòng để không bị dài quá mức
+                      rows={Math.min(
+                        Math.max(
+                          card.newWord ? card.newWord.split("\n").length : 1,
+                          1,
+                        ),
+                        6,
+                      )}
                       value={card.newWord}
                       onChange={(e) =>
                         handleCardChange(index, "newWord", e.target.value)
                       }
                       placeholder="Từ mới..."
-                      className="border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark px-1"
-                      style={{ boxShadow: "none" }}
+                      // Đổi bg-light thành bg-transparent để xóa mảng xám, trả lại đường gạch chân thanh thoát
+                      className="border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark px-1 bg-transparent"
+                      style={{
+                        boxShadow: "none",
+                        resize: "none",
+                        overflowY: "hidden",
+                      }}
                     />
                   </Form.Group>
                 </Col>
 
+                {/* CỘT 2: ĐỊNH NGHĨA (Cũng tự động co giãn) */}
                 <Col md={4} className="mb-3 mb-md-0">
                   <Form.Group controlId={`def-${index}`}>
                     <Form.Label className="small text-muted fw-semibold">
                       Định nghĩa (Definition)
                     </Form.Label>
                     <Form.Control
-                      type="text"
+                      as="textarea"
+                      rows={Math.min(
+                        Math.max(
+                          card.definition
+                            ? card.definition.split("\n").length
+                            : 1,
+                          1,
+                        ),
+                        6,
+                      )}
                       value={card.definition}
-                      onChange={(e) =>
-                        handleCardChange(index, "definition", e.target.value)
-                      }
+                      onChange={(e) => {
+                        handleCardChange(index, "definition", e.target.value);
+                        e.target.style.height = "auto";
+                        e.target.style.height = `${e.target.scrollHeight}px`;
+                      }}
                       placeholder="Nghĩa của từ..."
-                      className="border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark px-1"
-                      style={{ boxShadow: "none" }}
+                      className="border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark px-1 bg-transparent"
+                      style={{
+                        boxShadow: "none",
+                        resize: "none",
+                        overflowY: "hidden",
+                        minHeight: "38px",
+                      }}
                     />
                   </Form.Group>
                 </Col>
 
+                {/* CỘT 3: LINK ẢNH (Luôn là 1 dòng) */}
                 <Col md={4}>
                   <Form.Group controlId={`img-${index}`}>
                     <Form.Label className="small text-muted fw-semibold">
@@ -438,7 +529,7 @@ function CreateSet() {
                         handleCardChange(index, "imageUrl", e.target.value)
                       }
                       placeholder="https://example.com/anh.jpg"
-                      className="border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark px-1"
+                      className="border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark px-1 bg-transparent"
                       style={{ boxShadow: "none" }}
                     />
                   </Form.Group>
