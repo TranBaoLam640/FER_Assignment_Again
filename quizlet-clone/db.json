@@ -1,7 +1,6 @@
 {
   "sets": [
     {
-      "id": "8ee8",
       "title": "React Hook ",
       "description": "React Hook cơ bản",
       "cards": [
@@ -15,10 +14,12 @@
           "definition": "useEffect",
           "imageUrl": ""
         }
-      ]
+      ],
+      "learningType": "new_word",
+      "userId": "afda",
+      "id": "8ee8"
     },
     {
-      "id": "075c",
       "title": "Tung Tung Tung Sahur",
       "description": "hihi",
       "cards": [
@@ -28,22 +29,12 @@
           "imageUrl": "",
           "status": "not_know"
         }
-      ]
+      ],
+      "learningType": "new_word",
+      "userId": "afda",
+      "id": "075c"
     },
     {
-      "id": "1f4d",
-      "title": "Judelow",
-      "description": "Judelow",
-      "cards": [
-        {
-          "newWord": "Judelow",
-          "definition": "Judelow",
-          "imageUrl": ""
-        }
-      ]
-    },
-    {
-      "id": "4cdd",
       "title": "Ngay toi yeu em ",
       "description": "toi yeu em ",
       "cards": [
@@ -62,19 +53,15 @@
           "definition": "em",
           "imageUrl": ""
         }
-      ]
+      ],
+      "learningType": "new_word",
+      "userId": "afda",
+      "id": "4cdd"
     },
     {
-      "id": "d9d0",
       "title": "OCR Test",
       "description": "OCR Test\n",
       "cards": [
-        {
-          "newWord": "",
-          "definition": "",
-          "imageUrl": "",
-          "status": "know"
-        },
         {
           "newWord": "lift off",
           "definition": "The moment a rocket leaves the ground",
@@ -105,19 +92,15 @@
           "imageUrl": "",
           "status": "know"
         }
-      ]
+      ],
+      "learningType": "new_word",
+      "userId": "afda",
+      "id": "d9d0"
     },
     {
-      "id": "2e70",
       "title": "HIHIHI",
       "description": "",
       "cards": [
-        {
-          "newWord": "",
-          "definition": "",
-          "imageUrl": "",
-          "status": "not_know"
-        },
         {
           "newWord": "Commit",
           "definition": "Gửi mã nguồn lên kho lưu trữ trực tuyến để lưu lại lịch sử thay đổi",
@@ -154,10 +137,12 @@
           "imageUrl": "",
           "status": "not_know"
         }
-      ]
+      ],
+      "learningType": "new_word",
+      "userId": "afda",
+      "id": "2e70"
     },
     {
-      "id": "8760",
       "title": "aa",
       "description": "",
       "cards": [
@@ -166,11 +151,13 @@
           "definition": "d",
           "imageUrl": ""
         }
-      ]
+      ],
+      "learningType": "new_word",
+      "userId": "afda",
+      "id": "8760"
     },
     {
-      "id": "a874",
-      "title": "A",
+      "title": "Asssssss",
       "description": "",
       "cards": [
         {
@@ -178,7 +165,10 @@
           "definition": "BV",
           "imageUrl": ""
         }
-      ]
+      ],
+      "learningType": "new_word",
+      "userId": "afda",
+      "id": "a874"
     },
     {
       "title": "Sample IT ",
@@ -785,10 +775,11 @@
           "status": "not_know"
         }
       ],
+      "learningType": "new_word",
+      "userId": "afda",
       "id": "d24b"
     },
     {
-      "id": "3b64",
       "title": "SWD392",
       "description": "",
       "cards": [
@@ -2286,10 +2277,12 @@
           "imageUrl": "",
           "status": "not_know"
         }
-      ]
+      ],
+      "learningType": "source",
+      "userId": "afda",
+      "id": "3b64"
     },
     {
-      "id": "e71f",
       "title": "HIHI",
       "description": "",
       "cards": [
@@ -2323,7 +2316,10 @@
           "definition": "C. Guidelines used to help in structuring a software system into its components.",
           "imageUrl": ""
         }
-      ]
+      ],
+      "learningType": "new_word",
+      "userId": "afda",
+      "id": "e71f"
     },
     {
       "title": "Test2",
@@ -2340,10 +2336,11 @@
           "imageUrl": ""
         }
       ],
+      "learningType": "new_word",
+      "userId": "afda",
       "id": "9917"
     },
     {
-      "id": "2cd2",
       "title": "SWD",
       "description": "",
       "cards": [
@@ -2369,13 +2366,13 @@
           "newWord": "Which of the following are object oriented concepts?\nA. Modules and interfaces\nB. Modules and information hiding\nC. Classes, information hiding, and inheritance\nD. Concurrency and information hiding",
           "definition": "C. Classes, information hiding, and inheritance",
           "imageUrl": "",
-          "status": "not_know"
+          "status": "know"
         },
         {
           "newWord": "What is notation for a synchronous messages (from UML1.4)?\nA. A sold line with an arrow with a sock arrowhead\nB. A solid line with an arrow with a half arrowhead\nC. A dotted line with an arrow with a stick arrowhead\nD. A dotted line with an arrow with a half arrowhead",
           "definition": "C. A dotted line with an arrow with a stick arrowhead",
           "imageUrl": "",
-          "status": "not_know"
+          "status": "know"
         },
         {
           "newWord": "What is the stereotype extension mechanism?\nA. It allows defining a new building block that is derived from an existing UML modeling element but tailored to the modeler's problem\nB. It allows defining a new building block that is not based on existing UML modeling elements\nC. It allows defining a new element that is derived from an existing UML modeling element but tailored to the modeler's problem\nD. It allows defining a new element that is not based on existing UML modeling elements",
@@ -3841,7 +3838,83 @@
           "imageUrl": "",
           "status": "not_know"
         }
-      ]
+      ],
+      "learningType": "source",
+      "userId": "afda",
+      "id": "2cd2"
+    },
+    {
+      "title": "Hihi",
+      "description": "aaaaaaaaa",
+      "cards": [
+        {
+          "newWord": "ssv",
+          "definition": "ssv",
+          "imageUrl": ""
+        }
+      ],
+      "learningType": "new_word",
+      "userId": "b0b4",
+      "id": "326c"
+    },
+    {
+      "title": "a",
+      "description": "",
+      "cards": [
+        {
+          "newWord": "a",
+          "definition": "a",
+          "imageUrl": ""
+        }
+      ],
+      "learningType": "source",
+      "userId": "afda",
+      "id": "70cf"
+    },
+    {
+      "id": "a869",
+      "title": "baby get my gun",
+      "description": "",
+      "cards": [
+        {
+          "newWord": "RICHCHOI",
+          "definition": "RICHCHOI",
+          "imageUrl": "",
+          "status": "know"
+        },
+        {
+          "newWord": "battleking",
+          "definition": "battleking",
+          "imageUrl": "",
+          "status": "know"
+        },
+        {
+          "newWord": "and",
+          "definition": "and",
+          "imageUrl": "",
+          "status": "know"
+        },
+        {
+          "newWord": "MEGAZETZ",
+          "definition": "MEGAZETZ",
+          "imageUrl": "",
+          "status": "know"
+        }
+      ],
+      "learningType": "source",
+      "userId": "b0b4"
+    }
+  ],
+  "users": [
+    {
+      "id": "afda",
+      "user_name": "tranbbaolam12345",
+      "user_password": "1choigamenhuhack"
+    },
+    {
+      "id": "b0b4",
+      "user_name": "admin1",
+      "user_password": "admin1"
     }
   ]
 }

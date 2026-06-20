@@ -1,32 +1,90 @@
-import React from "react";
+import { React, useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar, Container, Button } from "react-bootstrap";
 import Home from "./pages/Home";
 import SetDetail from "./pages/SetDetail";
 import StudySession from "./pages/StudySession";
 import CreateSet from "./pages/CreateSet";
 import LearningSession from "./pages/LearningSession";
-
-function App() {
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import { useNavigate } from "react-router-dom";
+function NavigationBar({ user, onLogout }) {
   return (
-    <BrowserRouter>
-      {/* Thanh Điều Hướng (Navbar) chung cho toàn App */}
-      <Navbar bg="dark" variant="dark" expand="lg">
-        <Container>
-          <Navbar.Brand as={Link} to="/">
-            🧠 Quizlet Clone
-          </Navbar.Brand>
-        </Container>
-      </Navbar>
+    <Navbar bg="dark" variant="dark" expand="lg">
+      <Container>
+        <Navbar.Brand as={Link} to="/">
+          🧠 Quizlet Clone
+        </Navbar.Brand>
+
+        {/* Giao diện tự động cập nhật ngay khi biến 'user' thay đổi state */}
+        {user ? (
+          <div className="d-flex align-items-center gap-3">
+            <span className="text-light small opacity-75">
+              Chào, {user.userName}
+            </span>
+
+            <Button
+              variant="outline-danger"
+              size="sm"
+              className="rounded-pill px-3 fw-bold"
+              onClick={onLogout} // Gọi hàm logout mượt mà, không F5 trang
+            >
+              Đăng xuất 🚪
+            </Button>
+          </div>
+        ) : (
+          // Nếu chưa đăng nhập, hiển thị nút Đăng nhập / Đăng ký gọn gàng
+          <div className="d-flex gap-2">
+            <Button
+              as={Link}
+              to="/login"
+              variant="outline-light"
+              size="sm"
+              className="rounded-pill px-3"
+            >
+              Đăng nhập
+            </Button>
+          </div>
+        )}
+      </Container>
+    </Navbar>
+  );
+}
+function MainApp() {
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(() => {
+    const savedUser = localStorage.getItem("currentUser");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  // Hàm xử lý đăng xuất mượt mà bằng State
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    setCurrentUser(null);
+    navigate("/");
+  };
+  return (
+    <>
+      {/* Truyền dữ liệu user và hàm logout xuống cho Navbar gánh vác */}
+      <NavigationBar user={currentUser} onLogout={handleLogout} />
 
       {/* Định tuyến các trang */}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home currentUser={currentUser} />} />
         <Route path="/set/:setId" element={<SetDetail />} />
         <Route path="/set/:setId/study" element={<StudySession />} />
-        <Route path="/create" element={<CreateSet />} />
+        <Route path="/create" element={<CreateSet currentUser={currentUser}/>} />
         <Route path="/set/:setId/learn" element={<LearningSession />} />
-        {/* Route dự phòng nếu gõ sai URL */}
+        <Route path="/register" element={<Register />} />
+        <Route path="/test" element={<TestSession />} />
+
+        {/* 🔥 TRUYỀN THÊM hàm setCurrentUser vào trang Login để khi đăng nhập xong nó cập nhật ngược lại App */}
+        <Route
+          path="/login"
+          element={<Login onLoginSuccess={setCurrentUser} />}
+        />
+
         <Route
           path="*"
           element={
@@ -36,8 +94,14 @@ function App() {
           }
         />
       </Routes>
+    </>
+  );
+}
+function App() {
+  return (
+    <BrowserRouter>
+      <MainApp />
     </BrowserRouter>
   );
 }
-
 export default App;

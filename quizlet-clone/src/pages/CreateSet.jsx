@@ -8,10 +8,10 @@ import {
   Col,
   Alert,
 } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 const API_URL = "http://localhost:3001/sets";
 
-function CreateSet() {
+function CreateSet({currentUser}) {
   // ===== STATE =====
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -25,16 +25,25 @@ function CreateSet() {
   const [payloadArray, setPayloadArray] = useState([]);
   const [sets, setSets] = useState([]);
   const [editingId, setEditingId] = useState(null);
-  const [alert, setAlert] = useState(null);
+  const [alertMessage, setAlertMessage] = useState(null);
   const [error, setError] = useState("");
   // State điều khiển ẩn/hiện ô nhập văn bản thô
   const [showTextAreaInput, setShowTextAreaInput] = useState(false);
   const [rawText, setRawText] = useState("");
-
+  const [learningType, setLearningType] = useState("source");
+  const navigate = useNavigate();
   // ===== FETCH DATA KHI LOAD TRANG =====
   useEffect(() => {
     fetchSets();
   }, []);
+  useEffect(() => {
+    const user = localStorage.getItem("currentUser");
+
+    if (!user) {
+      alert("Bạn cần đăng nhập để truy cập tính năng này!");
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const fileToDataURL = (file) => {
     return new Promise((resolve) => {
@@ -116,20 +125,19 @@ function CreateSet() {
 
     e.target.value = "";
   };
-
-  const fetchSets = async () => {
+const fetchSets = async () => {
     try {
-      const res = await fetch(API_URL);
+      const userId = currentUser.userId;
+      const FETCH_URL = `${API_URL}?userId=${userId}`;
+      const res = await fetch(FETCH_URL);
       const data = await res.json();
       setSets(data);
-    } catch (err) {
-      showAlert("danger", "Không thể kết nối đến json-server...");
-    }
+    } catch (err) {}
   };
 
   const showAlert = (variant, message) => {
-    setAlert({ variant, message });
-    setTimeout(() => setAlert(null), 4000);
+    setAlertMessage({ variant, message });
+    setTimeout(() => setAlertMessage(null), 4000);
   };
 
   // ===== XỬ LÝ CARDS =====
@@ -193,10 +201,12 @@ function CreateSet() {
     setEditingId(null);
     setRawText("");
     setShowTextAreaInput(false);
+    setLearningType("new_word");
   };
 
   // ===== TẠO MỚI hoặc CẬP NHẬT =====
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     if (!title.trim()) {
       setError("Vui lòng nhập tiêu đề của set");
@@ -214,8 +224,10 @@ function CreateSet() {
     }
 
     setError("");
-
-    const payload = { title, description, cards };
+    const userString = localStorage.getItem("currentUser");
+    const currentUser = JSON.parse(userString);
+    const userId = currentUser.userId ;
+    const payload = { title, description, cards, learningType, userId };
     try {
       let res;
       if (editingId !== null) {
@@ -250,6 +262,7 @@ function CreateSet() {
     setEditingId(set.id);
     setTitle(set.title);
     setDescription(set.description);
+    setLearningType(set.learningType || "new_word");
     setCards(set.cards);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -311,13 +324,13 @@ function CreateSet() {
   return (
     <Container className="my-5" style={{ maxWidth: "800px" }}>
       {/* THÔNG BÁO */}
-      {alert && (
+      {alertMessage && (
         <Alert
-          variant={alert.variant}
+          variant={alertMessage.variant}
           dismissible
-          onClose={() => setAlert(null)}
+          onClose={() => setAlertMessage(null)}
         >
-          {alert.message}
+          {alertMessage.message}
         </Alert>
       )}
 
@@ -329,17 +342,34 @@ function CreateSet() {
       <Form onSubmit={handleSubmit}>
         {/* THÔNG TIN CHUNG */}
         <Card className="bg-light border-0 p-4 mb-4 rounded-3">
-          <Form.Group className="mb-3" controlId="formSetTitle">
-            <Form.Label className="fw-bold">Tiêu đề *</Form.Label>
-            <Form.Control
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Nhập tiêu đề, ví dụ: 'Tiếng Anh IT - Bài 1'"
-              size="lg"
-            />
-          </Form.Group>
-
+          <Row>
+            <Col md={8}>
+              <Form.Group className="mb-3" controlId="formSetTitle">
+                <Form.Label className="fw-bold">Tiêu đề *</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Nhập tiêu đề, ví dụ: 'Tiếng Anh IT - Bài 1'"
+                  size="lg"
+                />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group className="mb-3" controlId="formLearningType">
+                <Form.Label className="fw-bold ">Loại hình học tập</Form.Label>
+                <Form.Select
+                  size="lg"
+                  value={learningType}
+                  onChange={(e) => setLearningType(e.target.value)}
+                  className=" text-secondary"
+                >
+                  <option value="new_word">English Word</option>
+                  <option value="source">Source</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+          </Row>
           <Form.Group controlId="formSetDescription">
             <Form.Label className="fw-bold">Mô tả</Form.Label>
             <Form.Control
@@ -582,9 +612,9 @@ function CreateSet() {
           </h3>
           {sets.map((set) => (
             <Card key={set.id} className="mb-3 shadow-sm rounded-3">
-              <Card.Body>
+              <Card.Body className="px-3 py-2">
                 <div className="d-flex justify-content-between align-items-start">
-                  <div>
+                  <div className="text-start">
                     <h5 className="fw-bold mb-1">{set.title}</h5>
                     {set.description && (
                       <p className="text-muted small mb-1">{set.description}</p>

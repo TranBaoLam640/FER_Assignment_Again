@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Container, Card, Button, ProgressBar, Form } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 const API_URL = "http://localhost:3001/sets";
 
 // ===== ĐỊNH NGHĨA STYLES HIỆU ỨNG MỚI (Hiện đại & Mềm mại hơn) =====
@@ -50,6 +50,7 @@ const cardBackStyle = {
 };
 
 function StudySession() {
+  const navigate = useNavigate();
   const { setId } = useParams();
   const [set, setSet] = useState({ title: "", description: "", cards: [] });
   const [isFlipped, setIsFlipped] = useState(false);
@@ -65,7 +66,14 @@ function StudySession() {
       setCurrentCardIndex(Number(savedIndex));
     }
   }, [setId]);
+  useEffect(() => {
+    const user = localStorage.getItem("currentUser");
 
+    if (!user) {
+      alert("Bạn cần đăng nhập để truy cập tính năng này!");
+      navigate("/login");
+    }
+  }, [navigate]);
   useEffect(() => {
     if (set.cards && set.cards.length > 0) {
       localStorage.setItem(`progress_${setId}`, currentCardIndex);
@@ -264,35 +272,85 @@ function StudySession() {
                 // 📇 TRƯỜNG HỢP: HỌC TỪ VỰNG BÌNH THƯỜNG
                 <div style={cardContainerStyle(isTransitioning)}>
                   <div
-                    style={cardInnerStyle(isFlipped)}
+                    style={{
+                      ...cardInnerStyle(isFlipped),
+                      display:
+                        set?.learningType === "source" ? "grid" : undefined,
+                      height: set?.learningType === "source" ? "auto" : "100%",
+                    }}
                     onClick={() => !isTransitioning && setIsFlipped(!isFlipped)}
                   >
                     {/* MẶT TRƯỚC */}
-                    <Card style={cardFaceStyle}>
+                    <Card
+                      style={{
+                        ...cardFaceStyle,
+                        height:
+                          set?.learningType === "source" ? "auto" : "100%",
+                        position:
+                          set?.learningType === "source"
+                            ? "relative"
+                            : "absolute",
+                        gridArea:
+                          set?.learningType === "source"
+                            ? "1 / 1 / 2 / 2"
+                            : undefined,
+                        paddingBottom:
+                          set?.learningType === "source" ? "4rem" : "2rem",
+                        opacity: isFlipped ? 0 : 1,
+                        visibility: isFlipped ? "hidden" : "visible",
+                        transition:
+                          "transform 0.4s ease, opacity 0.2s ease, visibility 0.2s ease",
+                      }}
+                    >
                       <small className="text-muted mb-4 fw-bold tracking-wide">
-                        THUẬT NGỮ
+                        {set?.learningType === "source"
+                          ? "SOURCE CÂU HỎI"
+                          : "THUẬT NGỮ"}
                       </small>
-                      <h1 className="text-dark fw-bold display-5">
+                      <h1
+                        className={
+                          set?.learningType === "source"
+                            ? "text-dark w-100 px-3"
+                            : "text-dark fw-bold display-5"
+                        }
+                        style={{
+                          whiteSpace: "pre-line",
+                          fontSize:
+                            set?.learningType === "source"
+                              ? "1.1rem"
+                              : undefined,
+                          fontWeight:
+                            set?.learningType === "source"
+                              ? "normal"
+                              : undefined,
+                          textAlign:
+                            set?.learningType === "source" ? "left" : undefined,
+                          lineHeight:
+                            set?.learningType === "source" ? "1.6" : undefined,
+                        }}
+                      >
                         {set.cards[currentCardIndex].newWord}
                       </h1>
 
                       {/* 🔊 NÚT BẤM PHÁT ÂM THANH (Đã làm trong suốt, bỏ viền) */}
-                      <Button
-                        variant="link"
-                        className="position-absolute top-0 end-0 m-3 p-2 text-decoration-none text-secondary"
-                        style={{
-                          fontSize: "1.5rem",
-                          outline: "none",
-                          boxShadow: "none",
-                        }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleSpeak(set.cards[currentCardIndex].newWord);
-                        }}
-                        title="Phát âm"
-                      >
-                        🔊
-                      </Button>
+                      {set?.learningType !== "source" && (
+                        <Button
+                          variant="link"
+                          className="position-absolute top-0 end-0 m-3 p-2 text-decoration-none text-secondary"
+                          style={{
+                            fontSize: "1.5rem",
+                            outline: "none",
+                            boxShadow: "none",
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSpeak(set.cards[currentCardIndex].newWord);
+                          }}
+                          title="Phát âm"
+                        >
+                          🔊
+                        </Button>
+                      )}
                       <small className="text-primary position-absolute bottom-0 mb-4 fw-semibold">
                         💡 Click để xem định nghĩa
                       </small>

@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 // Dữ liệu fake tạm thời để hiển thị giao diện
 
 const API_URL = "http://localhost:3001/sets";
 
-function Home() { 
-  const [sets, setSets] = useState([]);                         
+function Home({ currentUser }) {
+  const [sets, setSets] = useState([]);
+
   useEffect(() => {
     fetchSets();
-  }, []);
+  }, [currentUser]);
   const fetchSets = async () => {
     try {
-      const res = await fetch(API_URL);
+      if (!currentUser) {
+        setSets([]); 
+        return; 
+      }
+      const userId = currentUser.userId;
+      const FETCH_URL = `${API_URL}?userId=${userId}`;
+      const res = await fetch(FETCH_URL);
       const data = await res.json();
       setSets(data);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   return (
