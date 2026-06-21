@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 // Cấu hình URL cứng trong file để component tự chạy độc lập
 const API_URL = "http://localhost:3001/sets";
 const CARDS_PER_ROUND = 7;
-export default function LearningSession() {
+ function LearningSession() {
   const navigate = useNavigate();
   const { setId } = useParams(); // Tự động lấy setId từ Router, không phụ thuộc vào cha nữa
 
@@ -438,3 +438,4 @@ export default function LearningSession() {
     </div>
   );
 }
+export default LearningSession;

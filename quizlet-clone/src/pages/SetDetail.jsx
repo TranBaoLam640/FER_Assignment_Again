@@ -54,6 +54,24 @@ function SetDetail() {
         >
           Learning Mode
         </Button>
+        <Button
+          as={Link}
+          to={`/set/${setId}/test`}
+          variant="success"
+          size="lg"
+          className="me-3"
+        >
+          Testing Mode
+        </Button>
+        <Button
+          as={Link}
+          to={`/set/${setId}/game`}
+          variant="success"
+          size="lg"
+          className="me-3"
+        >
+          Game Mode
+        </Button>
       </div>
 
       <h4>Danh sách từ vựng</h4>

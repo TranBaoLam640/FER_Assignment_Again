@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState,useEffect} from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Navbar, Container, Button } from "react-bootstrap";
 import Home from "./pages/Home";
@@ -8,7 +8,10 @@ import CreateSet from "./pages/CreateSet";
 import LearningSession from "./pages/LearningSession";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import TestSession from "./pages/TestSession";
+import MatchGame from "./pages/MatchGame";
 import { useNavigate } from "react-router-dom";
+import { testConnection } from "./api/testApi";
 function NavigationBar({ user, onLogout }) {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -57,7 +60,9 @@ function MainApp() {
     const savedUser = localStorage.getItem("currentUser");
     return savedUser ? JSON.parse(savedUser) : null;
   });
-
+  useEffect(() => {
+    testConnection();
+  }, []);
   // Hàm xử lý đăng xuất mượt mà bằng State
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
@@ -74,10 +79,14 @@ function MainApp() {
         <Route path="/" element={<Home currentUser={currentUser} />} />
         <Route path="/set/:setId" element={<SetDetail />} />
         <Route path="/set/:setId/study" element={<StudySession />} />
-        <Route path="/create" element={<CreateSet currentUser={currentUser}/>} />
+        <Route
+          path="/create"
+          element={<CreateSet currentUser={currentUser} />}
+        />
         <Route path="/set/:setId/learn" element={<LearningSession />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/test" element={<TestSession />} />
+        <Route path="/set/:setId/test" element={<TestSession />} />
+        <Route path="/set/:setId/game" element={<MatchGame />} />
 
         {/* 🔥 TRUYỀN THÊM hàm setCurrentUser vào trang Login để khi đăng nhập xong nó cập nhật ngược lại App */}
         <Route

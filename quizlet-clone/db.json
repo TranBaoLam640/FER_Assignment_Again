@@ -787,43 +787,43 @@
           "newWord": "What does an interaction diagram depict?\n\nA. Objects and links\n\nB. Classes and relationships\n\nC. Objects and messages\n\nD. States and events",
           "definition": "C. Objects and messages",
           "imageUrl": "",
-          "status": "not_know"
+          "status": "know"
         },
         {
           "newWord": "What does an interaction diagram depict?\n\nA. The state and transitions inside a control object\n\nB. Classes and their relationships\n\nC. Software objects and the sequence of their interactions\n\nD. The external objects communicating with the system",
           "definition": "C. Software objects and the sequence of their interactions",
           "imageUrl": "",
-          "status": "not_know"
+          "status": "know"
         },
         {
           "newWord": "What is the evolutionary prototyping approach?\n\nA. A form of incremental development in which the prototype is mapped to software architecture or user interfaces when the delivered system\n\nB. A form of software development in which the prototype evolves through several intermediate operational systems into the delivered system\n\nC. Risk-driven development\n\nD. A form of incremental development in which the prototype evolves through several intermediate operational systems into the delivered system",
           "definition": "B. A form of software development in which the prototype evolves through several intermediate operational systems into the delivered system",
           "imageUrl": "",
-          "status": "not_know"
+          "status": "know"
         },
         {
           "newWord": "Which of the following are object oriented concepts?\n\nA. Modules and interfaces\n\nB. Modules and information hiding\n\nC. Classes, information hiding, and inheritance\n\nD. Concurrency and information hiding",
           "definition": "C. Classes, information hiding, and inheritance",
           "imageUrl": "",
-          "status": "not_know"
+          "status": "know"
         },
         {
           "newWord": "What is notation for a synchronous messages (from UML1.4)?\n\nA. A sold line with an arrow with a sock arrowhead\n\nB. A solid line with an arrow with a half arrowhead\n\nC. A dotted line with an arrow with a stick arrowhead\n\nD. A dotted line with an arrow with a half arrowhead",
           "definition": "C. A dotted line with an arrow with a stick arrowhead",
           "imageUrl": "",
-          "status": "not_know"
+          "status": "know"
         },
         {
           "newWord": "What is the stereotype extension mechanism?\n\nA. It allows defining a new building block that is derived from an existing UML modeling element but tailored to the modeler's problem\n\nB. It allows defining a new building block that is not based on existing UML modeling elements\n\nC. It allows defining a new element that is derived from an existing UML modeling element but tailored to the modeler's problem\n\nD. It allows defining a new element that is not based on existing UML modeling elements",
           "definition": "A. It allows defining a new building block that is derived from an existing UML modeling element but tailored to the modeler's problem",
           "imageUrl": "",
-          "status": "not_know"
+          "status": "know"
         },
         {
           "newWord": "What do class structuring criteria help with?\n\nA. Structuring an application into classes\n\nB. Defining the attributes of a class\n\nC. Defining the associations of a class\n\nD. Defining the operations of a class",
           "definition": "A. Structuring an application into classes",
           "imageUrl": "",
-          "status": "not_know"
+          "status": "know"
         },
         {
           "newWord": "What are main difference between object-oriented static modeling and entity relationship modeling?\n\nA. Entity relationship modeling depicts entities, whereas object-oriented static modeling does not\n\nB. Object-oriented static modeling depicts attributes of each entity, whereas entity relationship modeling does not\n\nC. Entity relationship modeling depicts relationships, whereas object-oriented static modeling does not\n\nD. Object-oriented static modeling can depicts operations of each entity, whereas entity relationship modeling does not",
@@ -2317,7 +2317,7 @@
           "imageUrl": ""
         }
       ],
-      "learningType": "new_word",
+      "learningType": "source",
       "userId": "afda",
       "id": "e71f"
     },
@@ -2336,7 +2336,7 @@
           "imageUrl": ""
         }
       ],
-      "learningType": "new_word",
+      "learningType": "source",
       "userId": "afda",
       "id": "9917"
     },
@@ -3903,6 +3903,81 @@
       ],
       "learningType": "source",
       "userId": "b0b4"
+    },
+    {
+      "title": "10 question",
+      "description": "",
+      "cards": [
+        {
+          "newWord": "A",
+          "definition": "A",
+          "imageUrl": "",
+          "status": "know"
+        },
+        {
+          "newWord": "B",
+          "definition": "B",
+          "imageUrl": "",
+          "status": "know"
+        },
+        {
+          "newWord": "C",
+          "definition": "C",
+          "imageUrl": "",
+          "status": "not_know"
+        },
+        {
+          "newWord": "D",
+          "definition": "D",
+          "imageUrl": "",
+          "status": "know"
+        },
+        {
+          "newWord": "E",
+          "definition": "E",
+          "imageUrl": "",
+          "status": "know"
+        },
+        {
+          "newWord": "F",
+          "definition": "F",
+          "imageUrl": "",
+          "status": "know"
+        },
+        {
+          "newWord": "G",
+          "definition": "G",
+          "imageUrl": "",
+          "status": "know"
+        },
+        {
+          "newWord": "H",
+          "definition": "H",
+          "imageUrl": "",
+          "status": "not_know"
+        },
+        {
+          "newWord": "I",
+          "definition": "I",
+          "imageUrl": "",
+          "status": "not_know"
+        },
+        {
+          "newWord": "K",
+          "definition": "K",
+          "imageUrl": "",
+          "status": "not_know"
+        },
+        {
+          "newWord": "L",
+          "definition": "L",
+          "imageUrl": "",
+          "status": "not_know"
+        }
+      ],
+      "learningType": "source",
+      "userId": "afda",
+      "id": "8cfc"
     }
   ],
   "users": [
